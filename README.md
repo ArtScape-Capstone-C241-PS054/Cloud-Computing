@@ -2,12 +2,24 @@
 
 This repo contains stuff for backend API configurations
 
+
 ## API Reference
 
 #### POST Pengguna
 
 ```http
   POST {{url}}/api/pengguna/add
+```
+
+#### GET,PUT,DELETE Pengguna
+```http
+  GET {{url}}/api/pengguna/{id}
+```
+```http
+  PUT {{url}}/api/pengguna/{id}
+```
+```http
+  DELETE {{url}}/api/pengguna/{id}
 ```
 
 | Parameter | Type     | Description                |
@@ -37,6 +49,17 @@ This repo contains stuff for backend API configurations
 
 ```http
   POST {{url}}/api/karyaSeni/add
+```
+
+#### GET,PUT,DELETE Karya Seni
+```http
+  GET {{url}}/api/karyaSeni/{id}
+```
+```http
+  PUT {{url}}/api/karyaSeni/{id}
+```
+```http
+  DELETE {{url}}/api/karyaSeni/{id}
 ```
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
