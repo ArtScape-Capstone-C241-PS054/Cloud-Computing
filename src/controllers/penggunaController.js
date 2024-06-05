@@ -1,6 +1,7 @@
 // src/controllers/penggunaController.js
 const firestore = require('../config/firestore');
 const bucket = require('../config/cloud-storage');
+// const jwt = require('jsonwebtoken');
 
 // Fungsi untuk menambahkan pengguna dengan ID acak
 exports.addPengguna = async (req, res) => {
@@ -22,6 +23,41 @@ exports.addPengguna = async (req, res) => {
         res.status(500).send({ error: 'Error adding pengguna', details: error.message });
     }
 };
+// exports.addPengguna = async (req, res) => {
+//     try {
+//       const { name, deskripsi, minat } = req.body;
+//       const email = req.user.email; // Retrieve the email address from the Firebase Authentication SDK
+  
+//       // Create a new user with the provided name, email, deskripsi, and minat
+//       const newUser = new User({
+//         email: email,
+//         name: name,
+//         deskripsi: deskripsi,
+//         minat: minat
+//       });
+  
+//       // Save the new user to the database
+//       await newUser.save();
+  
+//       // Generate a JWT token for the new user
+//       const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+  
+//       // Return the token and user data to the client
+//       res.status(201).json({
+//         token,
+//         user: {
+//           _id: newUser._id,
+//           email: newUser.email,
+//           name: newUser.name,
+//           deskripsi: newUser.deskripsi,
+//           minat: newUser.minat
+//         }
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ message: 'Server error' });
+//     }
+//   };
 
 // Fungsi untuk mendapatkan pengguna berdasarkan ID
 exports.getPengguna = async (req, res) => {
