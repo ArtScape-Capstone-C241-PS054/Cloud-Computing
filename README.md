@@ -25,6 +25,7 @@ This repo contains stuff for backend API configurations
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
+| `idToken` | `string` | **Required**.|
 | `name` | `string` | **Required**.|
 | `address` | `string` | **Required**.|
 | `description` | `string` | **Required**.|
