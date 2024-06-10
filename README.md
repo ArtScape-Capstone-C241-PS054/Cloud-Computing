@@ -4,6 +4,7 @@ This repo contains stuff for backend API configurations
 
 
 
+
 ## API Reference
 
 #### POST User
@@ -12,7 +13,13 @@ This repo contains stuff for backend API configurations
   POST {{url}}/api/auth/google
 ```
 
-#### GET,PUT,DELETE Pengguna
+#### GET All User Data
+
+```http
+  GET {{url}}/api/user/allUser
+```
+
+#### GET,PUT,DELETE Pengguna by ID
 ```http
   GET {{url}}/api/user/{id}
 ```
@@ -25,11 +32,12 @@ This repo contains stuff for backend API configurations
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `idToken` | `string` | **Required**.|
 | `name` | `string` | **Required**.|
 | `address` | `string` | **Required**.|
 | `description` | `string` | **Required**.|
 | `interest` | `string` | **Required**.|
+| `phoneNumber` | `string` | **Optional**.|
+
 
 - success return body (register for new user)
 ```
@@ -66,7 +74,13 @@ This repo contains stuff for backend API configurations
   POST {{url}}/api/artwork/add
 ```
 
-#### GET,PUT,DELETE artwork
+#### GET All Artwork Data
+
+```http
+  GET {{url}}/api/artwork/allArtwork
+```
+
+#### GET,PUT,DELETE artwork by ID
 ```http
   GET {{url}}/api/artwork/{id}
 ```
@@ -106,6 +120,12 @@ This repo contains stuff for backend API configurations
 #### POST Transaction
 ```http
   POST {{url}}/api/transaction/add
+```
+
+#### GET All Transaction Data
+
+```http
+  GET {{url}}/api/user/allTransaction
 ```
 
 #### GET,PUT,DELETE artwork
