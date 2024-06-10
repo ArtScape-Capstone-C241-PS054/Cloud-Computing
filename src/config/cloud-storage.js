@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const storage = new Storage({
-  keyFilename: '../ArtScape API/artscape-key.json',
+  keyFilename: 'artscape-key.json',
   projectId: process.env.FIRESTORE_PROJECT_ID
 });
 

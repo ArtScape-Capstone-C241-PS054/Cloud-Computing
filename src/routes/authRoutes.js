@@ -3,6 +3,6 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 
-router.post('/google', authController.googleAuth);
+router.post('/google', authController.authWithGoogle);
 
 module.exports = router;

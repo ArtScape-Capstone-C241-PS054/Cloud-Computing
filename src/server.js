@@ -7,17 +7,18 @@ const PORT = process.env.PORT;
 const host_url = process.env.HOST_URL;
 const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const authRoutes = require('./routes/authRoutes'); // Import authRoutes
-const penggunaRoutes = require('./routes/penggunaRoutes');
-const karyaSeniRoutes = require('./routes/karyaSeniRoutes');
-const transaksiRoutes = require('./routes/transaksiRoutes');
+const userRoutes = require('./routes/userRoutes');
+const artworkRoutes = require('./routes/artworkRoutes');
+const transactionRoutes = require('./routes/transactionRoutes');
 // const rekomendasiRoutes = require('./routes/rekomendasiRoutes');
 
 app.use('/api/auth',authRoutes); // Use authRoutes
-app.use('/api/pengguna', penggunaRoutes);
-app.use('/api/karyaSeni', karyaSeniRoutes);
-app.use('/api/transaksi', transaksiRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/artwork', artworkRoutes);
+app.use('/api/transaction', transactionRoutes);
 // app.use('/api/rekomendasi', rekomendasiRoutes);
 
 app.listen(PORT, () => {
