@@ -3,87 +3,161 @@
 This repo contains stuff for backend API configurations
 
 
+
+
 ## API Reference
 
-#### POST Pengguna
+#### POST User
 
 ```http
-  POST {{url}}/api/pengguna/add
+  POST {{url}}/api/auth/google
 ```
 
-#### GET,PUT,DELETE Pengguna
+#### GET All User Data
+
 ```http
-  GET {{url}}/api/pengguna/{id}
+  GET {{url}}/api/user/allUser
+```
+
+#### GET,PUT,DELETE Pengguna by ID
+```http
+  GET {{url}}/api/user/{id}
 ```
 ```http
-  PUT {{url}}/api/pengguna/{id}
+  PUT {{url}}/api/user/{id}
 ```
 ```http
-  DELETE {{url}}/api/pengguna/{id}
+  DELETE {{url}}/api/user/{id}
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `nama` | `string` | **Required**.|
-| `email` | `string` | **Required**.|
-| `deskripsi` | `string` | **Required**.|
-| `minat` | `string` | **Required**.|
+| `name` | `string` | **Required**.|
+| `address` | `string` | **Required**.|
+| `description` | `string` | **Required**.|
+| `interest` | `string` | **Required**.|
+| `phoneNumber` | `string` | **Optional**.|
 
-- success return body
+
+- success return body (register for new user)
 ```
 {
-    "message": "Pengguna added successfully",
-    "id": "random ID will generate"
+    "message": "User registered successfully",
+    "uid": "uid based from auth"
+}
+```
+- success return body (login)
+```
+{
+    "message": "User login successful",
+    "uid": "uid based from auth"
 }
 ```
 
-- error return body
+- error return body (need data for new user to input)
 ```
 {
-    "error": "Error adding pengguna",
-    "details": "Value for argument \"data\" is not a valid Firestore document. Cannot use \"undefined\" as a Firestore value (found in field \"minat\"). If you want to ignore undefined values, enable `ignoreUndefinedProperties`."
+    "error": "Additional data required for new users"
+}
+```
+- error return body (401)
+```
+{
+    "error": "Unauthorized",
+    "details": ""
 }
 ```
 ----
-#### POST Karya Seni
+#### POST ArtWork
 
 ```http
-  POST {{url}}/api/karyaSeni/add
+  POST {{url}}/api/artwork/add
 ```
 
-#### GET,PUT,DELETE Karya Seni
+#### GET All Artwork Data
+
 ```http
-  GET {{url}}/api/karyaSeni/{id}
+  GET {{url}}/api/artwork/allArtwork
+```
+
+#### GET,PUT,DELETE artwork by ID
+```http
+  GET {{url}}/api/artwork/{id}
 ```
 ```http
-  PUT {{url}}/api/karyaSeni/{id}
+  PUT {{url}}/api/artwork/{id}
 ```
 ```http
-  DELETE {{url}}/api/karyaSeni/{id}
+  DELETE {{url}}/api/artwork/{id}
 ```
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `judul` | `string` | **Required**.|
-| `deskripsi` | `string` | **Required**.|
+| `file` | `picture` | **Required**.|
+| `title` | `string` | **Required**.|
+| `description` | `string` | **Required**.|
 | `media` | `string` | **Required**.|
 | `genre` | `string` | **Required**.|
-| `harga` | `number` | **Required**.|
-| `tahunBuat` | `number` | **Required**.|
-| `idSeniman` | `string` | **Required**.|
-| `keterangan` | `string` | **Required**.|
+| `price` | `number` | **Required**.|
+| `yearCreated` | `number` | **Required**.|
+| `artistId` | `string` | **Required**.|
 
 - success return body
 ```
 {
-    "message": "Karya seni added successfully",
-    "id": "random Id will generate"
+    "message": "Artwork added successfully",
+    "id": "random id will generate"
 }
 ```
 
 - error return body
 ```
 {
-    "error": "Error adding karya seni",
+    "error": "Error adding artwork",
+    "details": "Value for argument \"documentPath\" is not a valid resource path. Path must be a non-empty string."
+}
+```
+---
+#### POST Transaction
+```http
+  POST {{url}}/api/transaction/add
+```
+
+#### GET All Transaction Data
+
+```http
+  GET {{url}}/api/user/allTransaction
+```
+
+#### GET,PUT,DELETE artwork
+```http
+  GET {{url}}/api/transaction/{id}
+```
+```http
+  PUT {{url}}/api/transaction/{id}
+```
+```http
+  DELETE {{url}}/api/transaction/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `artworkId` | `string` | **Required**.|
+| `buyerId` | `string` | **Required**.|
+| `artistId` | `string` | **Required**.|
+| `price` | `number` | **Required**.|
+
+- success return body
+```
+{
+    "message": "Transaction added successfully",
+    "id": "random id will generate"
+}
+```
+
+- error return body
+```
+{
+    "error": "Error adding transaction",
     "details": "Value for argument \"documentPath\" is not a valid resource path. Path must be a non-empty string."
 }
 ```
