@@ -47,9 +47,9 @@ exports.addArtwork = async (req, res) => {
             return;
         }
 
-        const file = req.file;
-        if (!file) {
-            res.status(400).send({ error: 'No file uploaded' });
+        const photo = req.file;
+        if (!photo) {
+            res.status(400).send({ error: 'No photo uploaded' });
             return;
         }
 
@@ -57,7 +57,7 @@ exports.addArtwork = async (req, res) => {
         const artworkId = nanoid(7);
 
         // Save the file in a folder named after the artist ID
-        const blob = bucket.file(`${artistId}/${file.originalname}`);
+        const blob = bucket.file(`${artistId}/${encodeURIComponent(photo.originalname)}`);
         const blobStream = blob.createWriteStream({
             resumable: false,
         });
@@ -67,7 +67,7 @@ exports.addArtwork = async (req, res) => {
         });
 
         blobStream.on('finish', async () => {
-            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${encodeURIComponent(blob.name)}`;
 
             const artworkRef = firestore.collection('Artwork').doc(artworkId);
 
@@ -78,7 +78,7 @@ exports.addArtwork = async (req, res) => {
                 genre,
                 price: parsedPrice,
                 yearCreated: parsedYearCreated,
-                artworkImage: publicUrl,
+                photo: publicUrl,
                 artistId,
                 availability: true // Set availability to true by default
             });
@@ -89,10 +89,10 @@ exports.addArtwork = async (req, res) => {
             res.status(200).send({ message: 'Artwork added successfully', id: artworkId });
         });
 
-        blobStream.end(file.buffer);
+        blobStream.end(photo.buffer);
     } catch (error) {
         if (error.code === 'LIMIT_FILE_SIZE') {
-            res.status(413).send({ error: 'File size exceeds limit' });
+            res.status(413).send({ error: 'Photo size exceeds limit' });
         } else {
             res.status(500).send({ error: 'Error adding artwork', details: error.message });
         }
@@ -109,22 +109,36 @@ exports.getArtwork = async (req, res) => {
         if (!doc.exists) {
             res.status(404).send({ error: 'Artwork not found' });
         } else {
-            res.status(200).send(doc.data());
+            const { photo, title, description, media, genre, price, yearCreated, artistId, availability } = doc.data();
+            const artwork = {
+                id: doc.id,
+                photo: photo,
+                title,
+                description,
+                media,
+                genre,
+                price,
+                yearCreated,
+                artistId,
+                availability
+            };
+            res.status(200).send(artwork);
         }
     } catch (error) {
         res.status(500).send({ error: 'Error getting artwork', details: error.message });
     }
 };
 
+
 // Function to get all artwork data
 exports.getAllArtworkData = async (req, res) => {
     try {
         const artworkSnapshot = await firestore.collection('Artwork').get();
         const artworks = artworkSnapshot.docs.map(doc => {
-            const { artworkImage, title, description, media, genre, price, yearCreated, artistId, availability } = doc.data();
+            const { photo, title, description, media, genre, price, yearCreated, artistId, availability } = doc.data();
             return {
                 id: doc.id,
-                file: artworkImage,
+                photo: photo,
                 title,
                 description,
                 media,
@@ -157,22 +171,25 @@ exports.updateArtwork = async (req, res) => {
             return;
         }
 
-        await artworkRef.update({
-            title,
-            description,
-            media,
-            genre,
-            price,
-            yearCreated,
-            artistId,
-            availability,
-        });
+        // Buat objek pembaruan hanya dengan field yang tidak undefined
+        const updateData = {};
+        if (title !== undefined) updateData.title = title;
+        if (description !== undefined) updateData.description = description;
+        if (media !== undefined) updateData.media = media;
+        if (genre !== undefined) updateData.genre = genre;
+        if (price !== undefined) updateData.price = price;
+        if (yearCreated !== undefined) updateData.yearCreated = yearCreated;
+        if (artistId !== undefined) updateData.artistId = artistId;
+        if (availability !== undefined) updateData.availability = availability;
+
+        await artworkRef.update(updateData);
 
         res.status(200).send({ message: 'Artwork updated successfully' });
     } catch (error) {
         res.status(500).send({ error: 'Error updating artwork', details: error.message });
     }
 };
+
 
 // Function to delete sub-collections
 // Function to delete sub-collections

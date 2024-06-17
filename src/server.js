@@ -13,12 +13,14 @@ const authRoutes = require('./routes/authRoutes'); // Import authRoutes
 const userRoutes = require('./routes/userRoutes');
 const artworkRoutes = require('./routes/artworkRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
+const searchRoutes = require('./routes/searchRoutes');
 // const rekomendasiRoutes = require('./routes/rekomendasiRoutes');
 
 app.use('/api/auth',authRoutes); // Use authRoutes
 app.use('/api/user', userRoutes);
 app.use('/api/artwork', artworkRoutes);
 app.use('/api/transaction', transactionRoutes);
+app.use('/api/search',searchRoutes);
 // app.use('/api/rekomendasi', rekomendasiRoutes);
 
 app.listen(PORT, () => {

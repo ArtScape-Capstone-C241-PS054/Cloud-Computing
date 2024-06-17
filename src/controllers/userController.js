@@ -30,13 +30,15 @@ exports.getAllUserData = async (req, res) => {
             if (userData.lastLogin) {
                 lastLogin = userData.lastLogin.toDate(); // Konversi Firestore Timestamp menjadi objek Date
             }
-            const { name, address, description, interest, picture } = userData;
+            const { name, email, address, description, interest, picture, phoneNumber } = userData;
             return {
                 id: doc.id,
                 name,
+                email,
                 address,
                 description,
                 interest,
+                phoneNumber,
                 lastLogin,
                 photo: picture
             };
@@ -55,6 +57,17 @@ exports.getAllUserData = async (req, res) => {
 // Function to update a user by ID
 exports.updateUser = async (req, res) => {
     try {
+        const { phoneNumber } = req.body;
+
+        // Validate phone number format if provided
+        if (phoneNumber && phoneNumber.trim() !== '') {
+            const phoneNumberRegex = /^\+\d{1,3}\d{7,}$/;
+            if (!phoneNumberRegex.test(phoneNumber)) {
+                res.status(400).send({ error: 'Invalid phone number format. Include country code, e.g., +62' });
+                return;
+            }
+        }
+
         const userRef = firestore.collection('User').doc(req.params.id);
         await userRef.update(req.body);
 
