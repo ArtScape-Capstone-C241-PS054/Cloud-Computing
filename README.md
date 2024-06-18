@@ -5,14 +5,6 @@ API untuk Genre Classification
 
 
 
-URL API
-
-```bash
- https://genre-classification-api-ludpnm2hga-et.a.run.app
-```
-
-
-
 #### Post
 
 ```http
