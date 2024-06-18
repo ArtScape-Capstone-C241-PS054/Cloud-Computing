@@ -39,5 +39,11 @@ API untuk Genre Classification
     ]
 }
 
-```
+``````
+#### jika tidak ada gambar yang diupload
+
+```bash
+{
+    "error": "No image uploaded for genre prediction."
+}
 
