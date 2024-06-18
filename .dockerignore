@@ -1,0 +1,10 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.mp4
+*.mkv
+*.log
+.env
+.DS_Store
