@@ -1,0 +1,20 @@
+# Flask==2.0.2
+# tensorflow==2.6.0
+# Flask
+gunicorn
+# tensorflow
+# numpy
+# pillow
+
+Flask==3.0.3
+tensorflow-cpu==2.9.1
+numpy==1.22.4
+Pillow==9.1.1
+flatbuffers==1.12
+keras==2.9.0
+protobuf==3.19.4
+tensorboard==2.9.0
+tensorflow-estimator==2.9.0
+grpcio==1.48.2
+google-auth==2.15.0
+
